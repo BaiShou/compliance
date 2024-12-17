@@ -6,6 +6,7 @@ import com.pagoda.android.asm.privacy.compliance.ext.ComplianceConfig
 import com.pagoda.android.asm.privacy.compliance.visitor.base.MonitorDefaultMethodAdapter
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
+import com.pagoda.android.asm.privacy.compliance.config.BaseMethodCalled
 
 class MonitorMethodCalledReplaceAdapter extends MonitorDefaultMethodAdapter {
     private int mAccess

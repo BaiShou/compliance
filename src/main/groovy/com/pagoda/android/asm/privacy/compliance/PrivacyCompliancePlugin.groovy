@@ -13,8 +13,7 @@ class PrivacyCompliancePlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         ComplianceConfig extension = project.extensions.create('complianceConfig', ComplianceConfig)
-        BaseExtension appExtension = project.extensions.findByType(BaseExtension.class)
-        LibraryExtension
+        AppExtension appExtension = project.extensions.findByType(AppExtension.class)
         def transform = new MonitorTransform(project)
         appExtension.registerTransform(transform)
         project.afterEvaluate {
