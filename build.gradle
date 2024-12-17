@@ -2,6 +2,11 @@ plugins {
     id 'groovy'
     id 'maven-publish'
 }
+repositories {
+    mavenCentral()
+    jcenter()
+    google()
+}
 
 dependencies {
     implementation "com.android.tools.build:gradle:4.1.3"
