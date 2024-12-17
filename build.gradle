@@ -1,0 +1,41 @@
+plugins {
+    id 'groovy'
+    id 'maven-publish'
+}
+
+dependencies {
+    implementation "com.android.tools.build:gradle:4.1.3"
+
+    implementation 'org.ow2.asm:asm:9.2'
+    implementation 'org.ow2.asm:asm-commons:9.2'
+    implementation 'org.ow2.asm:asm-analysis:9.2'
+    implementation 'org.ow2.asm:asm-util:9.2'
+    implementation 'org.ow2.asm:asm-tree:9.2'
+    //apache.commons
+    implementation 'commons-codec:commons-codec:1.11'
+    implementation 'commons-io:commons-io:2.8.0'
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+}
+
+group = 'com.pagoda.android'
+version = '0.0.1'
+
+
+publishing {
+    publications {
+        myPlugin(MavenPublication){
+            from components.java //使用默认的配置生成jar包
+            groupId group
+            artifactId 'asm-privacy-compliance'
+            version version
+        }
+    }
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+}
