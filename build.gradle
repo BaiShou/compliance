@@ -1,0 +1,146 @@
+plugins {
+    id 'groovy'
+    id 'maven-publish'
+    id "signing"
+    id 'com.gradle.plugin-publish' version '0.16.0'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    google()
+}
+
+
+dependencies {
+    implementation "com.android.tools.build:gradle:4.1.3"
+
+    implementation 'org.ow2.asm:asm:9.2'
+    implementation 'org.ow2.asm:asm-commons:9.2'
+    implementation 'org.ow2.asm:asm-analysis:9.2'
+    implementation 'org.ow2.asm:asm-util:9.2'
+    implementation 'org.ow2.asm:asm-tree:9.2'
+    //apache.commons
+    implementation 'commons-codec:commons-codec:1.11'
+    implementation 'commons-io:commons-io:2.8.0'
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+}
+
+group = 'io.github.baishou'
+version = '0.0.6'
+
+publishing {
+    publications {
+        myPlugin(MavenPublication) {
+            from components.java //使用默认的配置生成jar包
+            groupId group
+            artifactId 'asm-privacy-compliance'
+            version version
+        }
+    }
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+}
+
+//防止乱码
+tasks.withType(Javadoc).configureEach {
+    options.version = true
+    options.author = true
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"  //解决中文乱码
+}
+
+
+//medivhPublisher{
+//    groupId = "io.github.baishou"
+//    artifactId = "compliance"
+//    version = "0.0.3"
+//    pom{
+//        // 项目名
+//        name = "compliance"
+//        // 项目描述
+//        description = "通过ASM处理隐私合规"
+//        // 项目主页
+//        url = "https://github.com/Anayuta/compliance"
+//        //开源许可
+//        licenses {
+//            license {
+//                name = "LGPL-3.0 license"
+//                url = "https://www.gnu.org/licenses/lgpl-3.0.html"
+//                distribution = "https://www.gnu.org/licenses/lgpl-3.0.html"
+//            }
+//        }
+//        //开发者信息
+//        developers {
+//            developer {
+//                name = "Anayuta"
+//                url = "hhttps://github.com/Anayuta/"
+//                email = "Anayuta@qq.com"
+//            }
+//        }
+//        //照着仓库地址填写
+//        scm {
+//            connection = "scm:git:git://github.com/Anayuta/compliance.git"
+//            developerConnection = "scm:git:ssh://github.com/Anayuta/compliance.git"
+//            url = "https://github.com/Anayuta/compliance.git"
+//        }
+//    }
+//}
+
+
+pluginBundle {
+    website = 'https://example.com/my-groovy-plugin'
+    vcsUrl = 'https://github.com/example/my-groovy-plugin.git'
+    tags = ['groovy', 'gradle']
+    plugins {
+        create("my-groovy-plugin") {
+            id = "io.github.baishou.android.privacy.compliance"  // 插件 ID (确保唯一)
+            displayName = "compliance"  // 插件展示名称
+            description = "通过ASM处理隐私合规"  // 插件描述
+            version = "0.0.6"  // 插件版本
+        }
+    }
+    mavenCoordinates {
+        groupId = "io.github.baishou"
+        artifactId = "compliance"
+        version = "0.0.6"
+    }
+}
+
+
+publishing {
+    publications {
+        pluginMaven(MavenPublication) {
+            from components.java
+            pom {
+                name = 'compliance'
+                description = '通过ASM处理隐私合规'
+                url = "https://github.com/baishou/compliance"
+                scm {
+                    connection = "scm:git:git://github.com/baishou/compliance.git"
+                    developerConnection = "scm:git:ssh://github.com/baishou/compliance.git"
+                    url = "https://github.com/baishou/compliance.git"
+                }
+                licenses {
+                    license {
+                        name = 'Apache 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+            }
+        }
+    }
+}
+
+//pluginPublish {
+//    // Gradle Plugin Portal的账号和API密钥
+//    user = project.findProperty("gradlePluginPortalUsername") ?: System.getenv("PLUGIN_PORTAL_USER")
+//    password = project.findProperty("gradlePluginPortalPassword") ?: System.getenv("PLUGIN_PORTAL_PASSWORD")
+//}
+
